@@ -17,7 +17,7 @@ const App = () => (
             float: 'right',
             maxWidth: '200px'
           }}
-          src="/api_logo_pwrdBy_strava_horiz_light.svg"
+          src="api_logo_pwrdBy_strava_horiz_light.svg"
           alt="Powered by Strava"
         />
       </header>

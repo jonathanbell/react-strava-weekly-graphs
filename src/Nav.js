@@ -22,7 +22,7 @@ class Nav extends Component {
         <ul>
           {this.setDefaultYearNavValues().map(year => (
             <li key={year}>
-              <a href={`/${year}`}>{year}</a>
+              <a href={`${year}`}>{year}</a>
             </li>
           ))}
         </ul>
