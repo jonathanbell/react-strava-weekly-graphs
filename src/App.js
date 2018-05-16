@@ -23,7 +23,10 @@ const App = () => (
       </header>
       <Switch>
         <Route exact path="/" component={ActivitiesChart} />
-        <Route path="/:year" component={ActivitiesChart} />
+        <Route
+          path="/react-strava-weekly-graphs/:year"
+          component={ActivitiesChart}
+        />
       </Switch>
     </div>
   </Router>
