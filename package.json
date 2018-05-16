@@ -1,6 +1,5 @@
 {
   "name": "react-strava-weekly-graphs",
-  "homepage": "http://jonathanbell.github.io/react-strava-weekly-graphs",
   "version": "0.0.1",
   "private": true,
   "repository": {
@@ -23,8 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "now",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
@@ -33,7 +31,6 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "gh-pages": "^1.1.0"
+    "eslint-plugin-react": "^7.7.0"
   }
 }
