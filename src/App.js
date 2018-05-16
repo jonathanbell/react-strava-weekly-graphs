@@ -24,7 +24,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={ActivitiesChart} />
         <Route
-          path="/react-strava-weekly-graphs/:year"
+          path={`${process.env.PUBLIC_URL}/:year`}
           component={ActivitiesChart}
         />
       </Switch>
