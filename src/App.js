@@ -22,7 +22,11 @@ const App = () => (
         />
       </header>
       <Switch>
-        <Route exact path="/" component={ActivitiesChart} />
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/`}
+          component={ActivitiesChart}
+        />
         <Route
           path={`${process.env.PUBLIC_URL}/:year`}
           component={ActivitiesChart}
