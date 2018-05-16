@@ -22,8 +22,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "deploy": "now",
+    "deploy":
+      "now --public && now alias && now rm react-strava-weekly-graphs --safe --yes",
     "eject": "react-scripts eject"
+  },
+  "now": {
+    "alias": "react-strava-weekly-graphs"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
