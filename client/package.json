@@ -1,0 +1,39 @@
+{
+  "name": "react-strava-weekly-graphs-client",
+  "version": "1.0.1",
+  "private": true,
+  "browserslist": [
+    "last 1 version",
+    "> 5% in US",
+    "node 9",
+    "not dead"
+  ],
+  "proxy": "http://localhost:5000/",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "chart.js": "^2.7.2",
+    "fast-deep-equal": "^2.0.1",
+    "moment": "^2.22.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-chartjs-2": "^2.7.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "styled-components": "^3.2.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0"
+  }
+}
