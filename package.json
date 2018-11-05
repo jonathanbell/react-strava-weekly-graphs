@@ -6,9 +6,11 @@
     "type": "git",
     "url": "https://github.com/jonathanbell/react-strava-weekly-graphs.git"
   },
+  "homepage": "https://jonathanbell.github.io/react-strava-weekly-graphs",
   "dependencies": {
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
+    "fast-deep-equal": "^2.0.1",
     "moment": "^2.22.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
@@ -22,12 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "deploy":
-      "now --public && now alias && now rm react-strava-weekly-graphs --safe --yes",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
-  },
-  "now": {
-    "alias": "react-strava-weekly-graphs"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -35,6 +34,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0"
+    "eslint-plugin-react": "^7.7.0",
+    "gh-pages": "^2.0.1"
   }
 }

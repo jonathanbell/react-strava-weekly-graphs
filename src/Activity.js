@@ -13,7 +13,8 @@ const Activity = ({ activity }) => (
 
 Activity.propTypes = {
   activity: PropTypes.shape({
-    name: PropTypes.string.isRequired // "validates" that the `name` is a prop type of string and is not NULL.
+    name: PropTypes.string.isRequired, // "validates" that the `name` is a prop type of string and is not NULL.
+    id: PropTypes.number.isRequired
   }).isRequired
 };
 

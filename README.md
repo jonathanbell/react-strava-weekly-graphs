@@ -1,8 +1,10 @@
 # React Strava Weekly Graphs
 
-This simple react app shows [my Strava activity](https://www.strava.com/athletes/3350904) data by hours per week inside a given year.
+This simple react app shows [my Strava](https://www.strava.com/athletes/3350904) activity data by hours per week inside a given year.
 
-Demo is viewable at: <https://react-strava-weekly-graphs.now.sh/> (free plan; please expect a delay on initial pageload)
+https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0
+
+Demo is viewable at: <https://jonathanbell.github.io/react-strava-weekly-graphs>
 
 ## Developer Installation
 

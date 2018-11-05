@@ -1,6 +1,6 @@
 /* eslint react/no-did-mount-set-state: 0 */
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -8,7 +8,7 @@ import ActivitiesChart from './ActivitiesChart';
 import Nav from './Nav';
 
 const App = () => (
-  <Router>
+  <HashRouter>
     <div className="App">
       <header className="App-header">
         <Nav />
@@ -22,18 +22,11 @@ const App = () => (
         />
       </header>
       <Switch>
-        <Route
-          exact
-          path={`${process.env.PUBLIC_URL}/`}
-          component={ActivitiesChart}
-        />
-        <Route
-          path={`${process.env.PUBLIC_URL}/:year`}
-          component={ActivitiesChart}
-        />
+        <Route path="/:year" component={ActivitiesChart} />
+        <Route exact path="/" component={ActivitiesChart} />
       </Switch>
     </div>
-  </Router>
+  </HashRouter>
 );
 
 export default App;

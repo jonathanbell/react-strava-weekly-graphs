@@ -2,6 +2,8 @@
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 import moment from 'moment';
+import equal from 'fast-deep-equal';
+
 import Activity from './Activity';
 
 class ActivitiesChart extends React.Component {
@@ -20,12 +22,6 @@ class ActivitiesChart extends React.Component {
       }
       return zeros;
     };
-
-    this.selectedYear =
-      this.props.match.params.year > 2014 &&
-      this.props.match.params.year < moment().year() + 1
-        ? parseInt(this.props.match.params.year, 10)
-        : parseInt(moment().year(), 10);
   }
 
   state = {
@@ -42,13 +38,17 @@ class ActivitiesChart extends React.Component {
       datasets: []
     },
     activities: [],
-    isLoaded: false
+    isLoaded: false,
+    selectedYear:
+      this.props.match.params.year > 2014 &&
+      this.props.match.params.year < moment().year() + 1
+        ? parseInt(this.props.match.params.year, 10)
+        : parseInt(moment().year(), 10)
   };
 
   componentDidMount() {
-    const getAllStravaActivitiesByYear = (
+    const getAllStravaActivities = (
       page = 1,
-      newDataSets = [],
       allActivities = [],
       activitiesPerPage = 200
     ) => {
@@ -63,112 +63,119 @@ class ActivitiesChart extends React.Component {
       )
         .then(response => response.json())
         .then(json => {
-          if (newDataSets.length === 0) {
-            newDataSets = [
-              {
-                label: 'Running', // 0
-                backgroundColor: 'rgba(31, 35, 215, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Strength and Finger Training', // 1
-                backgroundColor: 'rgba(91, 215, 31, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Rock Climbing', // 2
-                backgroundColor: 'rgba(213, 239, 15, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Hiking', // 3
-                backgroundColor: 'rgba(0, 150, 133, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Resort Skiing', // 4
-                backgroundColor: 'rgba(244, 67, 54, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Backcountry Skiing', // 5
-                backgroundColor: 'rgba(3, 169, 239, 0.73)',
-                data: this.setDefaultWeekValues()
-              },
-              {
-                label: 'Other', // 6
-                backgroundColor: 'rgba(157, 157, 153, 0.73)',
-                data: this.setDefaultWeekValues()
-              }
-            ];
-          }
-
-          json.forEach(activity => {
-            if (moment(activity.start_date).year() === this.selectedYear) {
-              let activityType = 6;
-
-              switch (activity.type) {
-                case 'Run':
-                  activityType = 0;
-                  break;
-                case 'WeightTraining':
-                case 'Workout':
-                  activityType = 1;
-                  break;
-                case 'RockClimbing':
-                  activityType = 2;
-                  break;
-                case 'Hike':
-                  activityType = 3;
-                  break;
-                case 'AlpineSki':
-                  activityType = 4;
-                  break;
-                case 'BackcountrySki':
-                  activityType = 5;
-                  break;
-                default:
-                  activityType = 6;
-              }
-
-              newDataSets[activityType].data[
-                moment(activity.start_date).isoWeek() - 1
-              ] +=
-                activity.elapsed_time / 3600;
-
-              allActivities.push(activity);
-            }
-          });
+          json.forEach(activity => allActivities.push(activity));
 
           if (
-            moment(json[json.length - 1].start_date).year() >=
-              this.selectedYear &&
+            moment(json[json.length - 1].start_date).year() >= 2016 &&
             json.length === activitiesPerPage
           ) {
             page += 1;
-            getAllStravaActivitiesByYear(
-              page,
-              newDataSets,
-              allActivities,
-              activitiesPerPage
-            );
+            getAllStravaActivities(page, allActivities, activitiesPerPage);
           } else {
-            console.log('We made this dataset for chart.js:', newDataSets);
+            console.log('I fetched all activities: ', allActivities.reverse());
 
-            // https://stackoverflow.com/questions/43040721/how-to-update-a-nested-state-in-react
-            const barChartData = { ...this.state.barChartData };
-            barChartData.datasets = newDataSets;
+            // Got our data
             this.setState({ isLoaded: true });
-            this.setState({ barChartData });
             this.setState({ activities: allActivities.reverse() });
           }
         })
         .catch(error =>
-          console.error('There was, like, totally an error....', error)
+          console.error(
+            'There was an error while connecting to the Strava API...',
+            error
+          )
         );
     };
 
-    getAllStravaActivitiesByYear();
+    getAllStravaActivities();
+
+    console.log('mounted');
+  }
+
+  componentDidUpdate(prevProps) {
+    // console.log(prevProps);
+
+    const newChartData = [
+      {
+        label: 'Running', // 0
+        backgroundColor: 'rgba(31, 35, 215, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Strength and Finger Training', // 1
+        backgroundColor: 'rgba(91, 215, 31, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Rock Climbing', // 2
+        backgroundColor: 'rgba(213, 239, 15, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Hiking', // 3
+        backgroundColor: 'rgba(0, 150, 133, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Resort Skiing', // 4
+        backgroundColor: 'rgba(244, 67, 54, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Backcountry Skiing', // 5
+        backgroundColor: 'rgba(3, 169, 239, 0.73)',
+        data: this.setDefaultWeekValues()
+      },
+      {
+        label: 'Other', // 6
+        backgroundColor: 'rgba(157, 157, 153, 0.73)',
+        data: this.setDefaultWeekValues()
+      }
+    ];
+
+    if (!equal(this.props.match.params.year, prevProps.match.params.year)) {
+      this.state.activities.forEach(activity => {
+        let activityType = 6;
+
+        switch (activity.type) {
+          case 'Run':
+            activityType = 0;
+            break;
+          case 'WeightTraining':
+          case 'Workout':
+            activityType = 1;
+            break;
+          case 'RockClimbing':
+            activityType = 2;
+            break;
+          case 'Hike':
+            activityType = 3;
+            break;
+          case 'AlpineSki':
+            activityType = 4;
+            break;
+          case 'BackcountrySki':
+            activityType = 5;
+            break;
+          default:
+            activityType = 6;
+        }
+
+        console.log('selectedYear', this.state.selectedYear);
+
+        if (moment(activity.start_date).year() === this.state.selectedYear) {
+          newChartData[activityType].data[
+            moment(activity.start_date).isoWeek() - 1
+          ] += activity.elapsed_time / 3600;
+        }
+      });
+
+      this.setState({ isLoaded: true });
+      // https://stackoverflow.com/questions/43040721/how-to-update-a-nested-state-in-react
+      const barChartData = { ...this.state.barChartData };
+      barChartData.datasets = newChartData;
+      this.setState({ barChartData });
+    } // If props.match.params.year and prevProps.match.params.year do not match
   }
 
   render() {
@@ -182,7 +189,7 @@ class ActivitiesChart extends React.Component {
             options={{
               title: {
                 text: `My ${
-                  this.selectedYear
+                  this.state.selectedYear
                 } Training Activities by Hours per Week`,
                 display: this.props.displayTitle,
                 fontSize: 20
@@ -224,7 +231,9 @@ class ActivitiesChart extends React.Component {
           </p>
         )}
         <hr />
-        {this.state.isLoaded && <h2>All {this.selectedYear} Activities</h2>}
+        {this.state.isLoaded && (
+          <h2>All - {this.state.selectedYear.toString()} - Activities</h2>
+        )}
         <ul>
           {this.state.activities.map(activity => (
             <li key={activity.id}>
