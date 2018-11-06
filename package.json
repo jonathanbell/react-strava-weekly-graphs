@@ -6,7 +6,9 @@
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "deploy": "NODE_ENV=production cd client && npm run build && cd.. && npm run start"
   },
   "author": "Jonathan Bell <jonathanbell.ca@gmail.com> (https://jonathanbell.info/)",
   "repository": {
@@ -21,7 +23,11 @@
     "node": ">=8.11.3 <=9.11.2"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "md5": "^2.2.1",
+    "mongoose": "^5.3.9",
+    "mustache-express": "^1.2.8"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Jonathan Bell <jonathanbell.ca@gmail.com>">
+
+    <title>Error | React Strava Weekly Graphs</title>
+</head>
+
+<body>
+
+  <h1>An error has occured.</h1>
+
+  {{#message}}
+    <p><strong>message:</strong> {{message}}</p>
+  {{/message}}
+
+  {{#status}}
+    <p><strong>status:</strong> {{status}}</p>
+  {{/status}}
+
+  {{#error}}
+    <p><strong>error:</strong> {{error}}</p>
+  {{/error}}
+
+  {{#stackHighlighted}}
+    <p style="margin-bottom: 0"><strong>stack:</strong></p>
+<pre style="margin-top: 0"><code>
+{{{stackHighlighted}}}
+</code></pre>
+  {{/stackHighlighted}}
+
+</body>
+</html>

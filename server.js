@@ -1,9 +1,29 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 5000;
+require('dotenv').config({ path: '.env' });
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+const mongoose = require('mongoose');
+
+// Connect to our Database and handle any bad connections.
+mongoose.connect(
+  process.env.DATABASE,
+  { useNewUrlParser: true }
+);
+
+// Tell Mongoose to use ES6 promises.
+mongoose.Promise = global.Promise;
+
+// Log database errors to the console.
+mongoose.connection.on('error', err => {
+  console.error(`Database connection error: ${err.message}`);
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+// Import all mongoDB models:
+require('./models/Activity');
+
+// Require our Express app
+const app = require('./app');
+app.set('port', 5000);
+
+// Start the app!
+const server = app.listen(app.get('port'), () => {
+  console.log(`Express is running on port ${server.address().port}.`);
+});
