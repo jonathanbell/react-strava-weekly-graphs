@@ -12,5 +12,9 @@ router.get('/api/hello', (req, res) => {
 });
 
 router.get('/testing', catchErrors(activityController.getActivityById));
+router.get(
+  '/testing2',
+  catchErrors(activityController.getActivitiesByTypeAndWeeklyDuration)
+);
 
 module.exports = router;

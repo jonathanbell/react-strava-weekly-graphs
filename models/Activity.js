@@ -64,4 +64,27 @@ activitySchema.index({
   type: 'text'
 });
 
+// TODO: Pretty good, but it could be better...
+activitySchema.statics.getTotalActivityDurationByWeekType = function(
+  after,
+  before
+) {
+  return this.aggregate([
+    { $match: { start_date: { $gt: after, $lt: before } } },
+    {
+      $group: {
+        _id: { week: { $week: '$start_date' }, type: '$type' },
+        total: { $sum: '$elapsed_time' }
+      }
+    },
+    { $sort: { '_id.week': 1 } },
+    {
+      $addFields: { activity: '$_id' }
+    },
+    {
+      $project: { _id: 0 }
+    }
+  ]);
+};
+
 module.exports = mongoose.model('Activity', activitySchema);
