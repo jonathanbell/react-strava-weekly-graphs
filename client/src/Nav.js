@@ -9,7 +9,13 @@ class Nav extends Component {
 
     this.setDefaultYearNavValues = () => {
       const navYears = [];
-      for (let i = moment().year(); i >= moment().year() - 2; i -= 1) {
+      for (
+        let i = moment()
+          .subtract(1, 'year')
+          .year();
+        i >= 2013;
+        i -= 1
+      ) {
         navYears.push(i);
       }
       return navYears;
@@ -19,11 +25,11 @@ class Nav extends Component {
   render() {
     return (
       <NavWrapper>
-        <p>Select a year:</p>
+        <Link to="/">Home</Link> | <p>Select a year:</p>
         <ul>
           {this.setDefaultYearNavValues().map(year => (
             <li key={year}>
-              <Link to={`/${year}`}>{year}</Link>
+              <Link to={`/weekly-graphs/${year}`}>{year}</Link>
             </li>
           ))}
         </ul>

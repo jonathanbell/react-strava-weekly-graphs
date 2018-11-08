@@ -13,7 +13,7 @@ router.get('/api/hello', (req, res) => {
 
 router.get('/testing', catchErrors(activityController.getActivityById));
 router.get(
-  '/testing2',
+  '/api/weekly-graphs/:year',
   catchErrors(activityController.getActivitiesByTypeAndWeeklyDuration)
 );
 

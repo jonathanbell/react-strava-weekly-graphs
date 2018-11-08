@@ -53,11 +53,11 @@ const getMaterialColor = index => {
 
 exports.getActivitiesByTypeAndWeeklyDuration = async (req, res) => {
   const activityDurationsByWeekType = await Activity.getTotalActivityDurationByWeekType(
-    new Date('2017-12-31T03:24:00'),
-    new Date()
+    new Date(`${req.params.year - 1}-12-31T23:59:59`),
+    new Date(`${req.params.year}-12-31T23:59:59`)
   );
 
-  // Build datasets for chart.js
+  // Build `datasets` for chart.js
 
   // Populate activityTypes
   const activityTypes = [];
@@ -87,8 +87,6 @@ exports.getActivitiesByTypeAndWeeklyDuration = async (req, res) => {
       }
     });
   });
-
-  // console.log(JSON.parse(JSON.stringify(datasets)));
 
   res.json(datasets);
 };
