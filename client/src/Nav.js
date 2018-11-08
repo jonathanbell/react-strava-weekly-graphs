@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -9,13 +8,7 @@ class Nav extends Component {
 
     this.setDefaultYearNavValues = () => {
       const navYears = [];
-      for (
-        let i = moment()
-          .subtract(1, 'year')
-          .year();
-        i >= 2013;
-        i -= 1
-      ) {
+      for (let i = new Date().getFullYear(); i >= 2013; i -= 1) {
         navYears.push(i);
       }
       return navYears;
@@ -25,9 +18,8 @@ class Nav extends Component {
   render() {
     return (
       <NavWrapper>
-        <Link to="/">Home</Link> | <p>Select a year:</p>
         <ul>
-          {this.setDefaultYearNavValues().map(year => (
+          {this.setDefaultYearNavValues().map((year, index) => (
             <li key={year}>
               <Link to={`/weekly-graphs/${year}`}>{year}</Link>
             </li>

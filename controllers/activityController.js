@@ -27,28 +27,48 @@ const generateRandomRGBAstr = () => {
   )}, 0.77)`;
 };
 
-const getMaterialColor = index => {
-  // Some colors
-  const backgroundColors = [
-    'rgba(30, 136, 229, 0.71)',
-    'rgba(109, 76, 65, 0.71)',
-    'rgba(192, 202, 51, 0.71)',
-    'rgba(0, 172, 193, 0.71)',
-    'rgba(142, 36, 170, 0.71)',
-    'rgba(244, 81, 30, 0.71)',
-    'rgba(84, 110, 122, 0.71)',
-    'rgba(67, 160, 71, 0.71)',
-    'rgba(251, 140, 0, 0.71)',
-    'rgba(117, 117, 117, 0.71)',
-    'rgba(253, 216, 53, 0.71)',
-    'rgba(144, 164, 174, 0.71)'
-  ];
-
-  if (typeof backgroundColors[index] === 'undefined') {
-    return generateRandomRGBAstr();
+const getMaterialColor = activityType => {
+  let materialColor = 'rgba(117, 117, 117, 0.71)';
+  console.log(activityType);
+  switch (activityType) {
+    case 'Backcountry Skiing':
+      materialColor = 'rgba(63, 81, 181, 0.7)';
+      break;
+    case 'Fingerboard Training':
+      materialColor = 'rgba(109, 76, 65, 0.71)';
+      break;
+    case 'Hiking':
+      materialColor = 'rgba(192, 202, 51, 0.71)';
+      break;
+    case 'Resort Skiing':
+      materialColor = 'rgba(0, 188, 212, 0.71)';
+      break;
+    case 'Ride':
+      materialColor = 'rgba(142, 36, 170, 0.71)';
+      break;
+    case 'Rock Climbing':
+      materialColor = 'rgba(233, 30, 99, 0.71)';
+      break;
+    case 'Run':
+      materialColor = 'rgba(251, 140, 0, 0.71)';
+      break;
+    case 'Strength Training':
+      materialColor = 'rgba(67, 160, 71, 0.71)';
+      break;
+    case 'Walk':
+      materialColor = 'rgba(255, 87, 34, 0.71)';
+      break;
+    case 'Swim':
+      materialColor = 'rgba(96, 125, 139, 0.77)';
+      break;
+    case 'Yoga':
+      materialColor = 'rgba(253, 216, 53, 0.71)';
+      break;
+    default:
+      materialColor = generateRandomRGBAstr();
   }
 
-  return backgroundColors[index];
+  return materialColor;
 };
 
 exports.getActivitiesByTypeAndWeeklyDuration = async (req, res) => {
@@ -70,11 +90,11 @@ exports.getActivitiesByTypeAndWeeklyDuration = async (req, res) => {
 
   // Intial population of datasets
   let datasets = [];
-  activityTypes.forEach((activityType, index) => {
+  activityTypes.forEach(activityType => {
     datasets.push({
       label: activityType,
       data: setDefaultWeekValues(),
-      backgroundColor: getMaterialColor(index)
+      backgroundColor: getMaterialColor(activityType)
     });
   });
 

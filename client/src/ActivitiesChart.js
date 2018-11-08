@@ -1,7 +1,6 @@
 /* eslint react/no-did-mount-set-state: 0 */
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
-import moment from 'moment';
 
 class ActivitiesChart extends React.Component {
   static defaultProps = {
@@ -58,6 +57,7 @@ class ActivitiesChart extends React.Component {
     });
 
     const body = await response.json();
+    console.log(body);
 
     if (response.status !== 200) {
       throw new Error(`HTTP response code error: ${response.status}`);

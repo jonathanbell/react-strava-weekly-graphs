@@ -24,7 +24,7 @@ exports.notFound = (req, res, next) => {
 // Based on `app.get('env')`
 exports.developmentErrors = (err, req, res, next) => {
   err.stack = err.stack || '';
-  console.error(err.stack);
+  //console.error(err.stack);
   const errorDetails = {
     message: err.message,
     status: err.status,
