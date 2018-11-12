@@ -27,13 +27,21 @@ app.use((req, res, next) => {
 // Redirect from non-www to www:
 // https://zeit.co/docs/guides/redirect#2.-redirect-inside-your-app
 app.use((req, res, next) => {
-  // // If the request doesn't come from www.blizzardjudge.com or from localhost:
-  // if (req.hostname !== process.env.APPHOST && req.hostname !== 'localhost') {
-  //   // Redirect to www.blizzardjudge.com keeping the pathname and querystring intact.
-  //   return res.redirect(`https://${process.env.APPHOST}${req.originalUrl}`);
-  // }
+  // If the request doesn't come from our app or from the Zeit deployment URL:
+  if (
+    req.hostname === process.env.NOW_URL ||
+    req.hostname === 'localhost' ||
+    req.hostname === process.env.APP_HOST
+  ) {
+    next();
+  } else {
+    console.error(`${req.hostname} requested data from our API.`);
+    // Return an error
+    res.status(403);
+    res.send('Please access this API from inside the application.');
+  }
 
-  next();
+  return;
 });
 
 if (process.env.NODE_ENV === 'production') {

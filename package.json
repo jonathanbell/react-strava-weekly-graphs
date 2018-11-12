@@ -8,7 +8,7 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
-    "deploy": "NODE_ENV=production cd client && npm run build && cd.. && npm run start"
+    "deploy": "cd client && npm run build && cd .. && now && now alias && now scale strava-weekly-graphs.now.sh 1"
   },
   "author": "Jonathan Bell <jonathanbell.ca@gmail.com> (https://jonathanbell.info/)",
   "repository": {
@@ -21,6 +21,12 @@
   },
   "engines": {
     "node": ">=8.11.3 <=9.11.2"
+  },
+  "now": {
+    "alias": [
+      "strava-weekly-graphs"
+    ],
+    "dotenv": ".env.production"
   },
   "dependencies": {
     "dotenv": "^6.1.0",

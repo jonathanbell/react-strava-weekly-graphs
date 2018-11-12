@@ -1,4 +1,3 @@
-/* eslint react/no-did-mount-set-state: 0 */
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 
