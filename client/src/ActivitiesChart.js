@@ -35,8 +35,6 @@ class ActivitiesChart extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    console.log('prevProps', prevProps.match.params.year);
-    console.log('currentProps', this.props.match.params.year);
     if (prevProps.match.params.year !== this.props.match.params.year) {
       this.setState({ isLoaded: false });
       const barChartData = { ...this.state.barChartData };
@@ -57,7 +55,6 @@ class ActivitiesChart extends React.Component {
     });
 
     const body = await response.json();
-    console.log(body);
 
     if (response.status !== 200) {
       throw new Error(`HTTP response code error: ${response.status}`);
@@ -68,9 +65,7 @@ class ActivitiesChart extends React.Component {
 
   render() {
     return (
-      <div>
-        <hr style={{ clear: 'both' }} />
-
+      <div style={{ minHeight: '100vh' }}>
         {!this.state.isError && !this.state.isLoaded && (
           <p className="mt-2 text-center text-info">
             Getting chart data from our Strava API...

@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 const Activity = mongoose.model('Activity');
 
 exports.getActivityById = async (req, res) => {
-  const activity = await Activity.find({})
-    .sort({ start_date: 1 })
-    .limit(1);
+  const activity = await Activity.findOne({ id: req.params.id });
   res.json(activity);
 };
 
@@ -14,6 +12,10 @@ const setDefaultWeekValues = () => {
     weeks.push(0);
   }
   return weeks;
+};
+
+const secondsToHours = seconds => {
+  return seconds / (60 * 60);
 };
 
 const getRandomInt = (min, max) => {
@@ -29,7 +31,7 @@ const generateRandomRGBAstr = () => {
 
 const getMaterialColor = activityType => {
   let materialColor = 'rgba(117, 117, 117, 0.71)';
-  console.log(activityType);
+
   switch (activityType) {
     case 'Backcountry Skiing':
       materialColor = 'rgba(63, 81, 181, 0.7)';
@@ -102,11 +104,51 @@ exports.getActivitiesByTypeAndWeeklyDuration = async (req, res) => {
   activityDurationsByWeekType.forEach(activityWeeklyObj => {
     datasets.forEach(activityType => {
       if (activityType.label === activityWeeklyObj.activity.type) {
-        activityType.data[activityWeeklyObj.activity.week] +=
-          activityWeeklyObj.total;
+        activityType.data[activityWeeklyObj.activity.week] += secondsToHours(
+          activityWeeklyObj.total
+        );
       }
     });
   });
 
   res.json(datasets);
+};
+
+exports.getActivitiesBySearchTerm = async (req, res) => {
+  const activities = await Activity.find({
+    $text: { $search: req.query.s }
+  })
+    .sort({ start_date: -1 })
+    .limit(20);
+
+  res.json(activities);
+};
+
+exports.getBiggies = async (req, res) => {
+  const mostElevationGainPromise = Activity.find({})
+    .sort({ total_elevation_gain: -1 })
+    .limit(1);
+  const longestDurationPromise = Activity.find({})
+    .sort({ elapsed_time: -1 })
+    .limit(1);
+  const longestDistancePromise = Activity.find({})
+    .sort({ distance: -1 })
+    .limit(1);
+  const fastestPromise = Activity.find({})
+    .sort({ max_speed: -1 })
+    .limit(1);
+
+  const results = await Promise.all([
+    mostElevationGainPromise,
+    longestDurationPromise,
+    longestDistancePromise,
+    fastestPromise
+  ]);
+
+  const biggies = [];
+  for (i = 0; i < results.length; i++) {
+    biggies.push(results[i][0]);
+  }
+
+  res.json(biggies);
 };
