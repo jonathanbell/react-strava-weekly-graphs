@@ -10,5 +10,7 @@ I mostly use this app for visualizing my own training data, but please feel free
 
 1.  Clone or download this repo.
 1.  `cd react-strava-weekly-graphs`
+1.  `cp .env.example .env`
+1.  [Setup your MonogoDB with your Strava activities](https://github.com/jonathanbell/sync-strava-db) and add your connection string to `.env`
 1.  `npm install && cd client && npm install && cd ..`
 1.  `npm run dev` when you're ready to start working and `npm run deploy` or `git push heroku master` (if using Heroku) when you're ready to go to production.
