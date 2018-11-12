@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import Nav from './Nav';
 import ActivitiesChart from './ActivitiesChart';
+import ClimbingLog from './ClimbingLog';
 import Search from './Search';
 import Footer from './Footer';
 
@@ -18,7 +19,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-          <div style={{ minHeight: '91vh' }}>
+          <div style={{ minHeight: '50vh' }}>
             <Header>
               <h1 className="sr-only">Strava Weekly Graphs</h1>
               <Nav />
@@ -38,7 +39,7 @@ export default class App extends Component {
             <Switch>
               <Route exact path="/" component={ActivitiesChart} />
               <Route path="/weekly-graphs/:year" component={ActivitiesChart} />
-              <Route path="/climbing-log" component={ActivitiesChart} />
+              <Route path="/climbing-log" component={ClimbingLog} />
               <Route path="/search" component={Search} />
             </Switch>
           </div>
