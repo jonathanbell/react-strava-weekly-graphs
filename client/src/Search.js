@@ -27,7 +27,6 @@ export default class Search extends Component {
     }
 
     this.setState({ activities });
-    console.log('activities', this.state.activities);
   };
 
   clearSearchValue = () => {

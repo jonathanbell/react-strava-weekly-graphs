@@ -47,11 +47,6 @@ app.use((req, res, next) => {
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
-
-  // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -65,12 +60,12 @@ app.use('/', routes);
 app.use(errorHandlers.notFound);
 
 // Really bad error... : |
-if (app.get('env') === 'development') {
+if (process.env.NODE_ENV === 'development') {
   // Development error handler
   app.use(errorHandlers.developmentErrors);
 }
 
-if (app.get('env') === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // Production error handler
   app.use(errorHandlers.productionErrors);
 }

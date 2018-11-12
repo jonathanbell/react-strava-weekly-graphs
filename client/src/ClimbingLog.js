@@ -31,7 +31,6 @@ export default class ClimbingLog extends Component {
 
     const recentRockClimbs = yearsRockClimbs.slice(week - weekRange, week);
     recentRockClimbs.reverse();
-    console.log(recentRockClimbs);
 
     this.setState({ recentRockClimbs });
   }
