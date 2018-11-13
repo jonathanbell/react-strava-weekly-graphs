@@ -47,7 +47,7 @@ const getMaterialColor = activityType => {
 };
 
 const Activity = ({ activity }) => (
-  <div className="card">
+  <div className="card mb-1">
     <div
       className="card-header"
       style={{ background: getMaterialColor(activity.type) }}
