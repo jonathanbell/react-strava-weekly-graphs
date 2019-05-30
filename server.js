@@ -3,10 +3,14 @@ require('dotenv').config({ path: '.env' });
 const mongoose = require('mongoose');
 
 // Connect to our Database and handle any bad connections.
-mongoose.connect(
-  process.env.DATABASE,
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true,
+  // https://stackoverflow.com/a/39831825/1171790
+  // Sets how many times to try reconnecting
+  reconnectTries: 99999,
+  // Sets the delay between every retry (milliseconds)
+  reconnectInterval: 1000
+});
 
 // Tell Mongoose to use ES6 promises.
 mongoose.Promise = global.Promise;
